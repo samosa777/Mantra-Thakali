@@ -56,7 +56,42 @@
         .nav-logo img { height: 55px; }
         .nav-links a { color: var(--white); text-decoration: none; margin-left: 35px; font-size: 10px; letter-spacing: 3px; font-weight: 600; text-transform: uppercase; transition: 0.3s; }
         .nav-links a:hover { color: var(--gold); }
-        .mobile-toggle { display: none; color: var(--white); font-size: 1.5rem; cursor: pointer; }
+        
+        /* Hamburger Menu Color set to Gold */
+        .mobile-toggle { display: none; color: var(--gold); font-size: 1.5rem; cursor: pointer; z-index: 1100; }
+        
+        /* --- ULTRA PREMIUM COMPACT PANEL --- */
+        .mobile-nav-overlay {
+            position: fixed; top: 0; right: -100%; width: 65%; height: 100vh;
+            background: rgba(15, 15, 15, 0.98); 
+            z-index: 2000; transition: 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+            display: flex; flex-direction: column; justify-content: center; padding-left: 40px;
+            box-shadow: -15px 0 50px rgba(0,0,0,0.9); 
+            border-left: 2px solid var(--gold);
+        }
+        .mobile-nav-overlay.active { right: 0; }
+        
+        .menu-backdrop { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); backdrop-filter: blur(5px); z-index: 1999; visibility: hidden; opacity: 0; transition: 0.4s; }
+        .menu-backdrop.active { visibility: visible; opacity: 1; }
+
+        .mobile-nav-overlay .close-menu { position: absolute; top: 30px; right: 30px; color: var(--gold); font-size: 1.5rem; cursor: pointer; }
+
+        .mobile-nav-overlay a {
+            color: var(--white); text-decoration: none; font-size: 1.3rem;
+            margin: 12px 0; font-family: 'Playfair Display'; letter-spacing: 1px;
+            transition: 0.4s; opacity: 0; transform: translateX(30px);
+            display: flex; align-items: center;
+        }
+        .mobile-nav-overlay.active a { opacity: 1; transform: translateX(0); }
+        
+        .mobile-nav-overlay a:hover { color: var(--gold); transform: translateX(10px); }
+        
+        .menu-dot { width: 6px; height: 6px; background: var(--gold); border-radius: 50%; margin-right: 15px; opacity: 0; transition: 0.3s; }
+        .mobile-nav-overlay a:hover .menu-dot { opacity: 1; }
+        
+        .mobile-nav-footer { margin-top: 40px; border-top: 1px solid rgba(197, 160, 89, 0.2); pt: 20px; width: 80%; }
+
+        /* --- END PANEL --- */
 
         .hero { position: relative; height: 100vh; display: flex; align-items: center; justify-content: center; overflow: hidden; background: var(--dark); }
         #bg-video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.5; }
@@ -81,7 +116,6 @@
         .feature-card h3 { font-family: 'Playfair Display'; font-size: 1.5rem; margin-bottom: 15px; font-weight: 400; color: var(--gold); }
         .feature-card p { font-size: 0.85rem; opacity: 0.6; }
 
-        /* Gallery Infinite Section */
         .gallery-section { padding: 80px 0 40px 0; background: var(--white); text-align: center; overflow: hidden; }
         .gallery-slider { width: 100%; overflow: hidden; padding: 40px 0; cursor: grab; position: relative; }
         .gallery-track { display: flex; width: max-content; will-change: transform; }
@@ -91,7 +125,6 @@
         .gallery-item h3 { position: absolute; bottom: 30px; left: 20px; color: white; font-family: 'Syncopate'; font-size: 0.8rem; letter-spacing: 2px; z-index: 2; }
         .gallery-item::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.6), transparent); }
 
-        /* Happy Customers Infinite Section */
         .happy-customers { padding: 80px 0; background: #fff; text-align: center; overflow: hidden; }
         .testi-slider { width: 100%; overflow: hidden; margin-top: 50px; cursor: grab; position: relative; }
         .testi-track { display: flex; width: max-content; will-change: transform; }
@@ -100,9 +133,8 @@
         .customer-photo { width: 90px; height: 90px; border-radius: 50%; object-fit: cover; margin-bottom: 15px; border: 2px solid var(--gold); padding: 4px; }
         .stars { color: var(--gold); margin-top: 10px; }
 
-        /* Contact & Map Section (Recovered from 3.html) */
         .contact-section { display: grid; grid-template-columns: 1fr 1fr; background: var(--white); border-top: 1px solid #eee; padding: 120px 12% 120px 4cm; gap: 50px; align-items: center; }
-        .contact-info { display: flex; flex-direction: column; justify-content: center; }
+        .contact-info { display: flex; flex-direction: column; justify-content: center; text-align: left; }
         .contact-info h2 { font-family: 'Playfair Display'; font-size: 3.5rem; margin-bottom: 30px; }
         .social-options { display: flex; gap: 20px; margin-top: 30px; }
         .social-options a { color: var(--gold); font-size: 1.5rem; transition: var(--trans); text-decoration: none; width: 45px; height: 45px; border: 1px solid var(--gold); display: flex; align-items: center; justify-content: center; border-radius: 50%; }
@@ -124,13 +156,34 @@
         footer p { letter-spacing: 5px; color: #555; font-size: 10px; text-transform: uppercase; }
 
         @media (max-width: 992px) {
-            nav { padding: 20px 30px; }
+            nav { padding: 15px 5%; }
+            nav.scrolled { padding: 10px 5%; }
             .nav-links { display: none; }
-            .mobile-toggle { display: block; }
-            .legacy-grid { grid-template-columns: 1fr; gap: 60px; }
-            .contact-section { grid-template-columns: 1fr; gap: 60px; padding: 100px 8%; }
-            .gallery-item { width: 220px; height: 315px; }
-            .map-wrapper { height: 400px; }
+            .mobile-toggle { display: block; font-size: 1.2rem; }
+            .container, .features, .gallery-section, .happy-customers { padding: 40px 5%; }
+            .contact-section { grid-template-columns: 1fr; gap: 30px; padding: 40px 5%; }
+            .legacy-grid { grid-template-columns: 1fr; gap: 30px; }
+            .contact-info { align-items: flex-start; text-align: left; }
+            .social-options { justify-content: flex-start; margin-top: 15px; gap: 10px; }
+            .map-wrapper { height: 250px; } 
+            .hero-overlay h1 { font-size: 3rem !important; margin-bottom: 10px; }
+            .hero-overlay p { font-size: 0.6rem; letter-spacing: 6px; }
+            .about-text h2 { font-size: 2rem !important; margin-bottom: 15px; }
+            h2[style*="font-size: 3"] { font-size: 1.6rem !important; margin-bottom: 10px; line-height: 1.2; }
+            .about-text p { font-size: 0.9rem; margin-bottom: 10px; line-height: 1.6; }
+            .about-image { padding: 5px; }
+            .about-image img { box-shadow: 8px 8px 0 var(--gold); }
+            .gallery-item { width: 170px; height: 240px; margin: 0 8px; }
+            .testi-card { width: 240px; padding: 20px; margin: 0 8px; }
+        }
+
+        @media (max-width: 576px) {
+            .nav-logo img { height: 40px; }
+            .hero-overlay h1 { font-size: 2.2rem !important; }
+            .about-text h2 { font-size: 1.6rem !important; }
+            .gallery-item { width: 140px; height: 200px; }
+            .testi-card { width: 220px; padding: 15px; }
+            .contact-info h2 { font-size: 1.8rem !important; }
         }
     </style>
 </head>
@@ -140,6 +193,25 @@
         <img src="Logo.webp" alt="Mantra Thakali" class="loader-logo" id="l-logo">
         <div class="loader-bar-container">
             <div class="loader-bar" id="l-bar"></div>
+        </div>
+    </div>
+
+    <div class="menu-backdrop" id="backdrop"></div>
+
+    <div class="mobile-nav-overlay" id="mobileMenu">
+        <div class="close-menu" id="closeBtn"><i class="fas fa-times"></i></div>
+        <a href="#home" class="menu-link"><div class="menu-dot"></div>Home</a>
+        <a href="menu.html" class="menu-link"><div class="menu-dot"></div>Menu</a>
+        <a href="about.html" class="menu-link"><div class="menu-dot"></div>Heritage</a>
+        <a href="gallery.html" class="menu-link"><div class="menu-dot"></div>Gallery</a>
+        <a href="#testimonials" class="menu-link"><div class="menu-dot"></div>Reviews</a>
+        <a href="#contact" class="menu-link"><div class="menu-dot"></div>Contact</a>
+        <div class="mobile-nav-footer">
+            <div class="mobile-social">
+                <i class="fab fa-facebook-f"></i>
+                <i class="fab fa-instagram"></i>
+                <i class="fab fa-tiktok"></i>
+            </div>
         </div>
     </div>
 
@@ -155,7 +227,7 @@
             <a href="#testimonials">Reviews</a>
             <a href="#contact">Contact</a>
         </div>
-        <div class="mobile-toggle"><i class="fas fa-bars"></i></div>
+        <div class="mobile-toggle" id="openBtn"><i class="fas fa-bars"></i></div>
     </nav>
 
     <section class="hero" id="home">
@@ -290,7 +362,25 @@
 
     <script src="https://cdn.jsdelivr.net/gh/PavelDoGreat/WebGL-Fluid-Simulation@master/script.js"></script>
     <script>
-        // Fluid Simulation Setup
+        const openBtn = document.getElementById('openBtn');
+        const closeBtn = document.getElementById('closeBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const backdrop = document.getElementById('backdrop');
+        const menuLinks = document.querySelectorAll('.menu-link');
+
+        function toggleMenu() {
+            mobileMenu.classList.toggle('active');
+            backdrop.classList.toggle('active');
+        }
+
+        openBtn.addEventListener('click', toggleMenu);
+        closeBtn.addEventListener('click', toggleMenu);
+        backdrop.addEventListener('click', toggleMenu);
+
+        menuLinks.forEach(link => {
+            link.addEventListener('click', toggleMenu);
+        });
+
         function initFluidForwarding() {
             const canvas = document.querySelector('canvas');
             if (!canvas) { setTimeout(initFluidForwarding, 200); return; }
@@ -306,18 +396,16 @@
         }
         initFluidForwarding();
 
-        // 1. INFINITE GALLERY (Right to Left)
         function setupInfiniteGallery() {
             const gTrack = document.getElementById('galleryTrack');
             const gSlider = document.getElementById('gallerySlider');
+            if(!gTrack) return;
             const galleryHTML = gTrack.innerHTML;
             gTrack.innerHTML = galleryHTML + galleryHTML + galleryHTML;
-
             let gXPos = 0;
-            let gSpeed = -1.2; // Move Right to Left
+            let gSpeed = -1.2;
             let gIsPaused = false;
             const gTotalWidth = gTrack.scrollWidth / 3;
-
             function animateGallery() {
                 if (!gIsPaused) {
                     gXPos += gSpeed;
@@ -326,11 +414,8 @@
                 }
             }
             gsap.ticker.add(animateGallery);
-
             Draggable.create(gTrack, {
-                type: "x",
-                trigger: gSlider,
-                inertia: true,
+                type: "x", trigger: gSlider, inertia: true,
                 onPress: () => gIsPaused = true,
                 onDrag: function() {
                     gXPos = this.x;
@@ -338,27 +423,20 @@
                     if (gXPos < -gTotalWidth * 2) gXPos += gTotalWidth;
                     gsap.set(this.target, { x: gXPos });
                 },
-                onRelease: () => {
-                    gIsPaused = false;
-                    gXPos = gsap.getProperty(gTrack, "x");
-                }
+                onRelease: () => { gIsPaused = false; gXPos = gsap.getProperty(gTrack, "x"); }
             });
-            gSlider.addEventListener('mouseenter', () => gIsPaused = true);
-            gSlider.addEventListener('mouseleave', () => gIsPaused = false);
         }
 
-        // 2. INFINITE HAPPY CUSTOMERS (Left to Right)
         function setupInfiniteHappyCustomers() {
             const track = document.getElementById('testiTrack');
             const slider = document.getElementById('testiSlider');
+            if(!track) return;
             const cardsHTML = track.innerHTML;
             track.innerHTML = cardsHTML + cardsHTML + cardsHTML;
-
             let xPos = 0;
-            let speed = 1.5; // Move Left to Right
+            let speed = 1.5;
             let isPaused = false;
             const totalWidth = track.scrollWidth / 3;
-
             function animate() {
                 if (!isPaused) {
                     xPos += speed;
@@ -367,11 +445,8 @@
                 }
             }
             gsap.ticker.add(animate);
-
             Draggable.create(track, {
-                type: "x",
-                trigger: slider,
-                inertia: true,
+                type: "x", trigger: slider, inertia: true,
                 onPress: () => isPaused = true,
                 onDrag: function() {
                     xPos = this.x;
@@ -379,13 +454,8 @@
                     if (xPos < -totalWidth * 2) xPos += totalWidth;
                     gsap.set(this.target, {x: xPos});
                 },
-                onRelease: () => {
-                    isPaused = false;
-                    xPos = gsap.getProperty(track, "x");
-                }
+                onRelease: () => { isPaused = false; xPos = gsap.getProperty(track, "x"); }
             });
-            slider.addEventListener('mouseenter', () => isPaused = true);
-            slider.addEventListener('mouseleave', () => isPaused = false);
         }
 
         window.addEventListener('load', () => {
@@ -394,7 +464,6 @@
               .to("#l-bar", { width: "100%", duration: 1.2 })
               .to("#loader", { y: "-100%", duration: 1, ease: "expo.inOut" })
               .from(".reveal", { y: 30, opacity: 0, duration: 1, stagger: 0.2, ease: "power3.out" }, "-=0.5");
-            
             setupInfiniteGallery();
             setupInfiniteHappyCustomers();
         });

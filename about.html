@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Our Heritage | Mantra Thakali Nepalgunj - The Soul of Authenticity</title>
+    <title>Our Heritage | Mantra Thakali Nepalgunj</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Prata&family=Inter:wght@300;400;600;700;800&family=Poppins:wght@200;300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -18,70 +18,109 @@
             --dark: #121212;
             --white: #ffffff;
             --soft-border: rgba(197, 160, 89, 0.2);
+            --card-shadow: 0 10px 30px -10px rgba(0,0,0,0.08);
             --trans: all 0.8s cubic-bezier(0.19, 1, 0.22, 1);
         }
 
         * { margin:0; padding:0; box-sizing:border-box; scroll-behavior: smooth; }
         body { background-color: var(--cream); color: var(--dark); font-family: 'Inter', sans-serif; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
 
-        /* Navigation */
-        nav { position: fixed; top: 0; width: 100%; padding: 25px 60px; display: flex; justify-content: space-between; align-items: center; z-index: 2000; transition: var(--trans); }
+        /* --- NAVIGATION & MOBILE MENU STYLES (FROM SCRIPT 1) --- */
+        nav { position: fixed; top: 0; width: 100%; padding: 25px 60px; display: flex; justify-content: space-between; align-items: center; background: transparent; z-index: 2000; transition: var(--trans); }
         nav.scrolled { background: rgba(15, 15, 15, 0.98); padding: 15px 60px; backdrop-filter: blur(20px); border-bottom: 1px solid var(--soft-border); }
         .nav-logo img { height: 45px; }
-        .nav-links a { color: var(--white); text-decoration: none; margin-left: 30px; font-size: 10px; letter-spacing: 2px; font-weight: 600; text-transform: uppercase; font-family: 'Poppins'; }
-        .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+        .nav-links a { color: var(--white); text-decoration: none; margin-left: 30px; font-size: 10px; letter-spacing: 2px; font-weight: 600; text-transform: uppercase; font-family: 'Poppins', sans-serif; }
+        .nav-links a.active { color: var(--gold); }
 
-        /* Hero Section */
-        .heritage-hero { height: 60vh; background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8)), url('About_Hero.webp') center/cover fixed; display: flex; justify-content: center; align-items: center; text-align: center; color: white; position: relative; }
-        .heritage-hero h1 { font-family: 'Playfair Display'; font-size: clamp(2.5rem, 8vw, 4.5rem); letter-spacing: 2px; }
+        .mobile-toggle { display: none; color: var(--gold); font-size: 1.5rem; cursor: pointer; z-index: 2101; }
+
+        .mobile-nav-overlay {
+            position: fixed; top: 0; right: -100%; width: 65%; height: 100vh;
+            background: rgba(15, 15, 15, 0.98); 
+            z-index: 2100; transition: 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+            display: flex; flex-direction: column; justify-content: center; padding-left: 40px;
+            box-shadow: -15px 0 50px rgba(0,0,0,0.9); 
+            border-left: 2px solid var(--gold);
+        }
+        .mobile-nav-overlay.active { right: 0; }
+        
+        .menu-backdrop { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); backdrop-filter: blur(5px); z-index: 2099; visibility: hidden; opacity: 0; transition: 0.4s; }
+        .menu-backdrop.active { visibility: visible; opacity: 1; }
+
+        .mobile-nav-overlay .close-menu { position: absolute; top: 30px; right: 30px; color: var(--gold); font-size: 1.5rem; cursor: pointer; }
+
+        .mobile-nav-overlay a {
+            color: var(--white); text-decoration: none; font-size: 1.3rem;
+            margin: 12px 0; font-family: 'Playfair Display'; letter-spacing: 1px;
+            transition: 0.4s; opacity: 0; transform: translateX(30px);
+            display: flex; align-items: center;
+        }
+        .mobile-nav-overlay.active a { opacity: 1; transform: translateX(0); }
+        .mobile-nav-overlay a:hover { color: var(--gold); transform: translateX(10px); }
+        
+        .menu-dot { width: 6px; height: 6px; background: var(--gold); border-radius: 50%; margin-right: 15px; opacity: 0; transition: 0.3s; }
+        .mobile-nav-overlay a:hover .menu-dot { opacity: 1; }
+        .mobile-nav-footer { margin-top: 40px; border-top: 1px solid rgba(197, 160, 89, 0.2); padding-top: 20px; width: 80%; }
+        .mobile-social { color: var(--gold); gap: 15px; display: flex; font-size: 1rem; margin-top: 20px;}
+
+        /* --- HERITAGE PAGE CONTENT STYLES --- */
+        .heritage-hero { 
+            height: 60vh; 
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8)), url('About_Hero.webp'); 
+            background-size: cover; background-position: center; background-attachment: fixed; 
+            display: flex; justify-content: center; align-items: center; text-align: center; 
+        }
+        .hero-content { z-index: 2; }
+        .heritage-hero h1 { font-family: 'Playfair Display'; font-size: clamp(2.5rem, 8vw, 4.5rem); color: white; letter-spacing: 2px; }
         .heritage-hero p { color: var(--gold); letter-spacing: 8px; text-transform: uppercase; font-size: 0.75rem; margin-bottom: 10px; }
         .hero-divider { width: 50px; height: 1px; background: var(--gold); margin: 20px auto 0; }
 
-        /* Content Styling */
-        .section-padding { padding: 100px 10%; }
-        .story-container { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
-        
-        .story-content h2 { font-family: 'Playfair Display'; font-size: 3rem; line-height: 1.2; margin-bottom: 30px; font-weight: 400; }
-        .story-content p { font-size: 1.05rem; color: #444; line-height: 1.8; margin-bottom: 25px; text-align: justify; }
-        .gold-divider { width: 60px; height: 2px; background: var(--gold); margin-bottom: 30px; }
-        
-        .story-image img { width: 100%; border-radius: 20px; box-shadow: 20px 20px 0 var(--gold); }
+        .section-padding { padding: 80px 10%; }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+        .section-title { font-family: 'Playfair Display'; font-size: 3rem; margin-bottom: 25px; line-height: 1.2; }
+        .text-content p { font-size: 1.05rem; line-height: 1.8; color: #444; margin-bottom: 20px; text-align: justify; }
+        .story-img { width: 100%; border-radius: 20px; box-shadow: 20px 20px 0 var(--gold); }
 
-        /* Founder Section - PREMIUM DESIGN */
-        .founder-section { background: var(--dark); color: white; padding: 120px 10%; }
-        .founder-grid { display: grid; grid-template-columns: 0.8fr 1.2fr; gap: 80px; align-items: center; }
-        .founder-image img { width: 100%; border-radius: 15px; filter: grayscale(100%); transition: 1.5s cubic-bezier(0.19, 1, 0.22, 1); border: 1px solid rgba(197, 160, 89, 0.3); }
-        .founder-image img:hover { filter: grayscale(0%); transform: scale(1.02); }
-        .founder-text h3 { color: var(--gold); letter-spacing: 5px; margin-bottom: 15px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
-        .founder-text h2 { font-family: 'Playfair Display'; font-size: 3rem; margin-bottom: 35px; font-weight: 400; line-height: 1.1; }
-        .founder-quote { font-size: 1.15rem; color: rgba(255,255,255,0.9); line-height: 1.9; border-left: 3px solid var(--gold); padding-left: 30px; margin-bottom: 30px; text-align: left; }
-        .founder-quote span { color: var(--gold); font-weight: 600; }
+        .founder-section { background: var(--dark); color: white; padding: 80px 10%; }
+        .founder-img { width: 100%; border-radius: 15px; border: 1px solid var(--gold); }
+        .founder-quote { border-left: 4px solid var(--gold); padding-left: 30px; font-size: 1.2rem; line-height: 1.6; margin: 30px 0; color: #ddd; }
 
-        /* Philosophy Cards */
-        .philosophy-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; margin-top: 60px; }
-        .phi-card { padding: 50px 35px; background: #fff; border-radius: 24px; text-align: center; border: 1px solid var(--soft-border); transition: 0.5s; box-shadow: 0 10px 30px rgba(0,0,0,0.03); }
-        .phi-card:hover { transform: translateY(-15px); border-color: var(--gold); box-shadow: 0 30px 60px rgba(0,0,0,0.1); }
-        .phi-card i { font-size: 2.2rem; color: var(--gold); margin-bottom: 25px; }
-        .phi-card h4 { font-family: 'Prata'; font-size: 1.4rem; margin-bottom: 15px; font-weight: 400; }
-        .phi-card p { font-size: 0.95rem; line-height: 1.6; color: #666; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; margin-top: 50px; }
+        .phi-card { background: white; padding: 40px 30px; text-align: center; border-radius: 20px; border: 1px solid var(--soft-border); box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        .phi-card i { font-size: 2.5rem; color: var(--gold); margin-bottom: 20px; }
+        .phi-card h4 { font-family: 'Prata'; font-size: 1.3rem; margin-bottom: 15px; }
 
-        /* Footer */
-        footer { background: var(--dark); color: white; text-align: center; padding: 80px 20px; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; opacity: 0.9; }
-        .footer-logo { height: 45px; margin-bottom: 30px; }
-        .social-links { margin-bottom: 30px; }
-        .social-links a { color: white; margin: 0 15px; font-size: 1.2rem; transition: 0.3s; }
-        .social-links a:hover { color: var(--gold); }
+        footer { background: #000; color: #999; text-align: center; padding: 50px; font-size: 0.8rem; letter-spacing: 2px; }
 
+        /* --- RESPONSIVE --- */
         @media (max-width: 992px) {
             nav { padding: 20px 30px; }
             .nav-links { display: none; }
-            .section-padding { padding: 80px 5%; }
-            .story-container, .founder-grid, .philosophy-grid { grid-template-columns: 1fr; }
-            .founder-quote { padding-left: 20px; font-size: 1.05rem; }
+            .mobile-toggle { display: block; }
+        }
+
+        @media (max-width: 768px) {
+            .heritage-hero { height: 50vh; background-attachment: scroll; }
+            .section-padding, .founder-section { padding: 40px 5%; }
+            .grid-2, .grid-3 { grid-template-columns: 1fr; gap: 30px; }
+            .section-title { font-size: 1.8rem; }
+            /* UPDATE: Thakali Image styling applied for mobile specifically */
+            .story-img { box-shadow: 10px 10px 0 var(--gold); max-height: 300px; object-fit: cover; }
         }
     </style>
 </head>
 <body>
+
+    <div class="menu-backdrop" id="backdrop"></div>
+    <div class="mobile-nav-overlay" id="mobileMenu">
+        <div class="close-menu" id="closeBtn"><i class="fas fa-times"></i></div>
+        <a href="index.html" class="menu-link"><div class="menu-dot"></div>Home</a>
+        <a href="menu.html" class="menu-link"><div class="menu-dot"></div>Menu</a>
+        <a href="heritage.html" class="menu-link"><div class="menu-dot"></div>Heritage</a>
+        <a href="gallery.html" class="menu-link"><div class="menu-dot"></div>Gallery</a>
+        <a href="index.html#contact" class="menu-link"><div class="menu-dot"></div>Contact</a>
+        <div class="mobile-nav-footer"></div>
+    </div>
 
     <nav id="navbar">
         <div class="nav-logo"><a href="index.html"><img src="Logo.webp" alt="Mantra Logo"></a></div>
@@ -91,6 +130,7 @@
             <a href="heritage.html" class="active">Heritage</a>
             <a href="gallery.html">Gallery</a>
         </div>
+        <div class="mobile-toggle" id="openBtn"><i class="fas fa-bars"></i></div>
     </nav>
 
     <section class="heritage-hero">
@@ -102,26 +142,24 @@
     </section>
 
     <section class="section-padding">
-        <div class="story-container">
-            <div class="story-image anim-up">
-                <img src="About Thakali.webp" alt="Authentic Thakali Culture">
+        <div class="grid-2">
+            <div class="anim-up">
+                <img src="About Thakali.webp" alt="Thakali Culture" class="story-img">
             </div>
-            <div class="story-content anim-up">
-                <div class="gold-divider"></div>
-                <p style="color: var(--gold); font-weight: 700; letter-spacing: 3px; font-size: 0.7rem; text-transform: uppercase;">A Legacy in the Making</p>
-                <h2>Crafting Excellence, Preserving Tradition</h2>
-                <p>Mantra Thakali Nepalgunj was established with a singular vision: to honor the timeless culinary traditions of the Himalayas while setting a new global standard for boutique hospitality. We believe that true luxury lies in the purity of the craft.</p>
-                <p>Every Thali served within our walls is more than just a meal—it is a meticulously curated experience. From the high-altitude jimbu of Mustang to the hand-milled spices of our ancestral valleys, we bring the soul of the Thak Khola region to your table with uncompromising elegance.</p>
+            <div class="text-content anim-up">
+                <p style="color:var(--gold); font-weight:700; letter-spacing:2px; font-size:0.7rem; text-transform:uppercase;">A Legacy in the Making</p>
+                <h2 class="section-title">Crafting Excellence, Preserving Tradition</h2>
+                <p>Mantra Thakali Nepalgunj was established with a singular vision: to honor the timeless culinary traditions of the Himalayas while setting a new global standard for boutique hospitality.</p>
+                <p>Every Thali served within our walls is a meticulously curated experience. From the high-altitude jimbu of Mustang to the hand-milled spices, we bring the soul of the Thak Khola region to your table.</p>
             </div>
         </div>
     </section>
 
     <section class="founder-section">
-        <div class="founder-grid">
-            <div class="founder-text anim-up">
-                <h3>The Leadership Vision</h3>
-                <h2>A Message From Our Founder</h2>
-                
+        <div class="grid-2">
+            <div class="text-content anim-up">
+                <h3 style="color:var(--gold); font-size:0.7rem; letter-spacing:3px; text-transform:uppercase; margin-bottom:10px;">The Leadership Vision</h3>
+                <h2 class="section-title">A Message From Our Founder</h2>
                 <div class="founder-quote">
                     "Mantra Thakali was never meant to be just another name in the industry; it was born from a <span>relentless pursuit of perfection</span> and a deep-rooted respect for our Himalayan heritage. We set out to redefine fine dining in Nepalgunj by proving that authenticity and world-class luxury can coexist seamlessly."
                 </div>
@@ -129,79 +167,77 @@
                 <div class="founder-quote">
                     "For us, hospitality is not a service—it is a <span>sacred duty</span>. We do not just host guests; we curate memories that resonate with the spirit of our land. My commitment is to ensure that Mantra remains a sanctuary of purity, where every grain of rice and every spice tells a story of integrity and passion."
                 </div>
-
-                <div style="margin-top: 50px;">
-                    <h4 style="font-family: 'Playfair Display'; font-size: 2.2rem; color: var(--gold); font-weight: 400; margin-bottom: 5px; letter-spacing: 1px;">Mr. Santosh Budha Thoki</h4>
-                    <span style="font-size: 11px; letter-spacing: 3px; opacity: 0.7; text-transform: uppercase; font-weight: 600;">Founder & Chairman</span>
+                <div>
+                    <h4 class="founder-name" style="font-family:'Playfair Display'; font-size:2rem; color:var(--gold); margin-bottom:5px;">Mr. Santosh Budha Thoki</h4>
+                    <span style="font-size:10px; letter-spacing:2px; opacity:0.7; text-transform:uppercase;">Founder & Chairman</span>
                 </div>
             </div>
-            <div class="founder-image anim-up">
-                <img src="Founder.webp" alt="Mr. Santosh Budha Thoki - Founder & Chairman of Mantra Thakali">
+            <div class="anim-up">
+                <img src="Founder.webp" alt="Founder" class="founder-img">
             </div>
         </div>
     </section>
 
-    <section class="section-padding">
-        <div style="text-align: center; margin-bottom: 80px;">
-            <p style="color: var(--gold); letter-spacing: 5px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase;">The Three Pillars</p>
-            <h2 style="font-family: 'Playfair Display'; font-size: 3rem; font-weight: 400;">The Mantra Philosophy</h2>
+    <section class="section-padding" style="text-align:center;">
+        <div class="anim-up">
+            <p style="color:var(--gold); letter-spacing:3px; font-size:0.7rem; font-weight:700; text-transform:uppercase;">The Three Pillars</p>
+            <h2 class="section-title">The Mantra Philosophy</h2>
         </div>
-        <div class="philosophy-grid">
+        <div class="grid-3">
             <div class="phi-card anim-up">
                 <i class="fas fa-leaf"></i>
                 <h4>Absolute Purity</h4>
-                <p>We source ingredients directly from the Himalayan farmers, ensuring no additives—only the raw, organic power of nature.</p>
+                <p>Sourcing directly from Himalayan farmers, ensuring only raw, organic power of nature.</p>
             </div>
             <div class="phi-card anim-up">
                 <i class="fas fa-heart"></i>
                 <h4>Atithi Devo Bhava</h4>
-                <p>In our halls, hospitality is a religion. Every guest is welcomed with the same reverence as a member of our own family.</p>
+                <p>In our halls, hospitality is a religion. Every guest is revered as family.</p>
             </div>
             <div class="phi-card anim-up">
                 <i class="fas fa-mortar-pestle"></i>
                 <h4>Culinary Mastery</h4>
-                <p>Our master chefs utilize slow-cooking techniques passed down through centuries to preserve nutrients and intensify flavors.</p>
+                <p>Utilizing slow-cooking techniques passed down through centuries to intensify flavors.</p>
             </div>
         </div>
     </section>
 
-    <section class="section-padding" style="background: rgba(197, 160, 89, 0.05); text-align: center;">
-        <div style="max-width: 800px; margin: 0 auto;" class="anim-up">
-            <h2 style="font-family: 'Playfair Display'; font-size: 2.8rem; margin-bottom: 30px; font-weight: 400;">Beyond The Plate</h2>
-            <p style="line-height: 2; color: #555; font-size: 1.1rem;">Mantra Thakali is more than a restaurant; it is a landmark of culture and celebration in Nepalgunj. Our architecture reflects our philosophy—clean, premium, and deeply rooted in the soil of Nepal.</p>
-            <a href="https://share.google/XPNdods1howOMgaeJ" target="_blank" style="display: inline-block; margin-top: 40px; color: var(--gold); text-decoration: none; font-weight: 700; letter-spacing: 2px; border-bottom: 2px solid var(--gold); padding-bottom: 5px; font-size: 0.85rem; text-transform: uppercase;">Visit Our Location</a>
-        </div>
-    </section>
-
     <footer>
-        <img src="Logo.webp" alt="Mantra Logo" class="footer-logo">
-        <div class="social-links">
-            <a href="https://www.facebook.com/p/Hotel-Mantra-Thakali-Hospitality-100093931943706/" target="_blank"><i class="fab fa-facebook-f"></i></a>
-            <a href="#"><i class="fab fa-instagram"></i></a>
-            <a href="#"><i class="fab fa-tiktok"></i></a>
-        </div>
+        <img src="Logo.webp" alt="Mantra Logo" style="height:40px; margin-bottom:20px; opacity:0.7;">
         <p>© 2026 MANTRA THAKALI NEPALGUNJ | REFINING TRADITION</p>
     </footer>
 
     <script>
+        // --- MOBILE MENU LOGIC (SAME AS SCRIPT 1) ---
+        const openBtn = document.getElementById('openBtn');
+        const closeBtn = document.getElementById('closeBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const backdrop = document.getElementById('backdrop');
+        const menuLinksOver = document.querySelectorAll('.menu-link');
+
+        function toggleMenu() {
+            mobileMenu.classList.toggle('active');
+            backdrop.classList.toggle('active');
+        }
+
+        openBtn.addEventListener('click', toggleMenu);
+        closeBtn.addEventListener('click', toggleMenu);
+        backdrop.addEventListener('click', toggleMenu);
+        menuLinksOver.forEach(link => { link.addEventListener('click', toggleMenu); });
+
+        // Scroll Logic for Navbar
         window.addEventListener('scroll', () => {
             const nav = document.getElementById('navbar');
             if (window.scrollY > 50) nav.classList.add('scrolled');
             else nav.classList.remove('scrolled');
         });
 
+        // GSAP Animations for Content (Kept from Script 2)
         gsap.registerPlugin(ScrollTrigger);
-
         gsap.utils.toArray('.anim-up').forEach(el => {
             gsap.from(el, {
-                scrollTrigger: {
-                    trigger: el,
-                    start: "top 90%",
-                },
-                y: 60,
-                opacity: 0,
-                duration: 1.2,
-                ease: "power3.out"
+                scrollTrigger: { trigger: el, start: "top 90%" },
+                y: 40, opacity: 0, duration: 1, ease: "power3.out"
             });
         });
     </script>
