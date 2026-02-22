@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Menu | Mantra Thakali Nepalgunj</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Prata&family=Inter:wght@300;400;600;700;800&family=Poppins:wght@200;300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+    <style>
+        :root { 
+            --gold: #c5a059; 
+            --cream: #fdfcf9; 
+            --dark: #121212;
+            --white: #ffffff;
+            --soft-border: rgba(197, 160, 89, 0.2);
+            --card-shadow: 0 10px 30px -10px rgba(0,0,0,0.08);
+            --trans: all 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        * { margin:0; padding:0; box-sizing:border-box; scroll-behavior: smooth; }
+        body { background-color: var(--cream); color: var(--dark); font-family: 'Inter', sans-serif; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+
+        nav { position: fixed; top: 0; width: 100%; padding: 25px 60px; display: flex; justify-content: space-between; align-items: center; background: transparent; z-index: 2000; transition: var(--trans); }
+        nav.scrolled { background: rgba(15, 15, 15, 0.98); padding: 15px 60px; backdrop-filter: blur(20px); border-bottom: 1px solid rgba(197, 160, 89, 0.2); }
+        .nav-logo img { height: 45px; }
+        .nav-links a { color: var(--white); text-decoration: none; margin-left: 30px; font-size: 10px; letter-spacing: 2px; font-weight: 600; text-transform: uppercase; font-family: 'Poppins', sans-serif; }
+        .nav-links a.active { color: var(--gold); }
+
+        .menu-hero { height: 60vh; background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8)), url('hero.webp'); background-size: cover; background-position: center; background-attachment: fixed; display: flex; justify-content: center; align-items: center; position: relative; text-align: center; }
+        .hero-content { z-index: 2; }
+        .menu-hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.5rem, 8vw, 4.5rem); color: white; line-height: 1.2; letter-spacing: 2px; }
+        .menu-hero p { color: var(--gold); letter-spacing: 8px; text-transform: uppercase; font-size: 0.75rem; }
+        .hero-divider { width: 50px; height: 1px; background: var(--gold); margin: 20px auto 0; }
+
+        .back-to-menu { position: fixed; bottom: 30px; right: 30px; z-index: 2000; width: 50px; height: 50px; background: var(--dark); border-radius: 15px; display: flex; justify-content: center; align-items: center; color: #fff; text-decoration: none; opacity: 0; visibility: hidden; transition: 0.4s; }
+        .back-to-menu.show { opacity: 1; visibility: visible; }
+
+        /* BOUNCING CALL BUTTON */
+        .floating-call-btn {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            z-index: 2001;
+            width: 60px;
+            height: 60px;
+            background: var(--gold);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--dark);
+            font-size: 24px;
+            text-decoration: none;
+            box-shadow: 0 8px 25px rgba(197, 160, 89, 0.5);
+            animation: bounceCall 2s infinite ease-in-out;
+            transition: 0.3s;
+        }
+        .floating-call-btn::after {
+            content: ''; position: absolute; width: 100%; height: 100%; border-radius: 50%;
+            background: var(--gold); opacity: 0.5; z-index: -1; animation: rippleCall 2s infinite;
+        }
+        @keyframes bounceCall { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+        @keyframes rippleCall { 0% { transform: scale(1); opacity: 0.5; } 100% { transform: scale(2); opacity: 0; } }
+
+        /* Category Bar Styling */
+        .nav-wrapper { position: sticky; top: 85px; z-index: 1000; width: 100%; display: flex; justify-content: center; padding: 0 15px; margin-top: -30px; }
+        .category-nav { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px); padding: 12px 20px; border-radius: 20px; border: 1px solid var(--soft-border); box-shadow: var(--card-shadow); overflow-x: auto; display: flex; gap: 8px; scrollbar-width: none; max-width: 95%; }
+        .category-nav::-webkit-scrollbar { display: none; }
+        .nav-link { color: #555; text-decoration: none; padding: 10px 22px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; transition: 0.4s; border-radius: 12px; cursor: pointer; white-space: nowrap; flex-shrink: 0; }
+        .nav-link.active { color: #fff; background: var(--dark); }
+
+        .container { padding: 80px 5%; max-width: 1600px; margin: 0 auto; min-height: 100vh; }
+        .menu-group { margin-bottom: 80px; scroll-margin-top: 160px; }
+        .category-title { font-family: 'Prata', serif; font-size: 2.2rem; color: var(--dark); margin-bottom: 45px; text-align: center; position: relative; }
+        .category-title::after { content: ""; position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%); width: 50px; height: 2px; background: var(--gold); }
+
+        .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; }
+        .item-card { background: #fff; border-radius: 24px; overflow: hidden; transition: 0.5s; position: relative; border: 1px solid var(--soft-border); box-shadow: var(--card-shadow); }
+        .item-card:hover { transform: translateY(-10px); border-color: var(--gold); }
+        .img-box { width: 100%; height: 220px; background: #f4f4f4; overflow: hidden; }
+        .img-box img { width: 100%; height: 100%; object-fit: cover; transition: 1s; }
+        .price-tag { position: absolute; top: 15px; right: 15px; background: white; padding: 6px 15px; border-radius: 12px; font-weight: 800; font-size: 0.9rem; border: 1px solid var(--gold); }
+        .info { padding: 25px 15px; text-align: center; }
+        .name { font-family: 'Prata', serif; font-size: 1.1rem; color: var(--dark); display: block; }
+
+        footer { background: var(--dark); color: white; text-align: center; padding: 60px 20px; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; }
+
+        @media (max-width: 1200px) { .grid { grid-template-columns: repeat(3, 1fr); } }
+        @media (max-width: 992px) { .grid { grid-template-columns: repeat(2, 1fr); } .nav-links { display: none; } }
+        @media (max-width: 600px) { .grid { grid-template-columns: 1fr; } .floating-call-btn { bottom: 90px; right: 20px; width: 55px; height: 55px; } .back-to-menu { right: 20px; bottom: 20px; } }
+    </style>
+</head>
+<body>
+
+<a href="tel:+977985866009" class="floating-call-btn"><i class="fas fa-phone-alt"></i></a>
+
+<nav id="navbar">
+    <div class="nav-logo"><a href="index.html"><img src="logo.webp" alt="Mantra"></a></div>
+    <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="menu.html" class="active">Menu</a>
+        <a href="about.html">Heritage</a>
+        <a href="gallery.html">Gallery</a>
+    </div>
+</nav>
+
+<section class="menu-hero">
+    <div class="hero-content">
+        <p>Experience the Taste</p>
+        <h1>The Menu</h1>
+        <div class="hero-divider"></div>
+    </div>
+</section>
+
+<div class="nav-wrapper">
+    <div class="category-nav">
+        <div class="nav-link active" onclick="filterMenu('all', this)">All Menu</div>
+        <div class="nav-link" onclick="filterMenu('soft-drinks', this)">Soft Drinks</div>
+        <div class="nav-link" onclick="filterMenu('refreshments', this)">Lassi</div>
+        <div class="nav-link" onclick="filterMenu('tea-coffee', this)">Tea & Coffee</div>
+        <div class="nav-link" onclick="filterMenu('beer-wine', this)">Alcohol</div>
+        <div class="nav-link" onclick="filterMenu('veg-snacks', this)">Veg Snacks</div>
+        <div class="nav-link" onclick="filterMenu('mutton', this)">Mutton</div>
+        <div class="nav-link" onclick="filterMenu('chicken', this)">Chicken</div>
+        <div class="nav-link" onclick="filterMenu('momo-chau', this)">Chef Choice</div>
+        <div class="nav-link" onclick="filterMenu('kids', this)">Kids</div>
+    </div>
+</div>
+
+<div class="container" id="menu-container">
+    <div class="menu-group" id="soft-drinks">
+        <h2 class="category-title">Soft Drinks & Juices</h2>
+        <div class="grid">
+            <div class="item-card"><div class="price-tag">70</div><div class="img-box"><img src="coke.webp"></div><div class="info"><span class="name">Coke / Fanta / Sprite</span></div></div>
+            <div class="item-card"><div class="price-tag">70</div><div class="img-box"><img src="pepsi.webp"></div><div class="info"><span class="name">Pepsi / Dew / Slice</span></div></div>
+            <div class="item-card"><div class="price-tag">350</div><div class="img-box"><img src="coke-jambo.webp"></div><div class="info"><span class="name">Jambo Coke</span></div></div>
+            <div class="item-card"><div class="price-tag">115</div><div class="img-box"><img src="guava.webp"></div><div class="info"><span class="name">Guava Juice (250ml)</span></div></div>
+            <div class="item-card"><div class="price-tag">350</div><div class="img-box"><img src="guava-bottle.webp"></div><div class="info"><span class="name">Guava Bottle</span></div></div>
+            <div class="item-card"><div class="price-tag">270</div><div class="img-box"><img src="redbull.webp"></div><div class="info"><span class="name">Red Bull</span></div></div>
+            <div class="item-card"><div class="price-tag">50</div><div class="img-box"><img src="water.webp"></div><div class="info"><span class="name">Water Bottle</span></div></div>
+        </div>
+    </div>
+
+    <div class="menu-group" id="refreshments">
+        <h2 class="category-title">Refreshments & Lassi</h2>
+        <div class="grid">
+            <div class="item-card"><div class="price-tag">130</div><div class="img-box"><img src="lassi-special.webp"></div><div class="info"><span class="name">Special Sweet Lassi</span></div></div>
+            <div class="item-card"><div class="price-tag">100</div><div class="img-box"><img src="lassi-plain.webp"></div><div class="info"><span class="name">Plain Lassi</span></div></div>
+            <div class="item-card"><div class="price-tag">90</div><div class="img-box"><img src="masala-coke.webp"></div><div class="info"><span class="name">Masala Coke</span></div></div>
+            <div class="item-card"><div class="price-tag">60</div><div class="img-box"><img src="lemon-soda.webp"></div><div class="info"><span class="name">Fresh Lemon Soda</span></div></div>
+        </div>
+    </div>
+
+    <div class="menu-group" id="tea-coffee">
+        <h2 class="category-title">Tea & Coffee</h2>
+        <div class="grid">
+            <div class="item-card"><div class="price-tag">100</div><div class="img-box"><img src="coffee-milk.webp"></div><div class="info"><span class="name">Milk Coffee</span></div></div>
+            <div class="item-card"><div class="price-tag">80</div><div class="img-box"><img src="coffee-black.webp"></div><div class="info"><span class="name">Black Coffee</span></div></div>
+            <div class="item-card"><div class="price-tag">80</div><div class="img-box"><img src="tea-milk.webp"></div><div class="info"><span class="name">Milk Tea</span></div></div>
+            <div class="item-card"><div class="price-tag">60</div><div class="img-box"><img src="tea-black.webp"></div><div class="info"><span class="name">Black Tea</span></div></div>
+            <div class="item-card"><div class="price-tag">50</div><div class="img-box"><img src="lemon-water.webp"></div><div class="info"><span class="name">Hot Lemon Water</span></div></div>
+            <div class="item-card"><div class="price-tag">40</div><div class="img-box"><img src="hot-water.webp"></div><div class="info"><span class="name">Hot Water</span></div></div>
+        </div>
+    </div>
+
+    <div class="menu-group" id="beer-wine">
+        <h2 class="category-title">Alcohol & Wine</h2>
+        <div class="grid">
+            <div class="item-card"><div class="price-tag">645</div><div class="img-box"><img src="carlsberg.webp"></div><div class="info"><span class="name">Carlsberg</span></div></div>
+            <div class="item-card"><div class="price-tag">590</div><div class="img-box"><img src="tuborg.webp"></div><div class="info"><span class="name">Tuborg Gold</span></div></div>
+            <div class="item-card"><div class="price-tag">555</div><div class="img-box"><img src="budweiser.webp"></div><div class="info"><span class="name">Budweiser</span></div></div>
+            <div class="item-card"><div class="price-tag">275</div><div class="img-box"><img src="apple-cider.webp"></div><div class="info"><span class="name">Apple Cider</span></div></div>
+            <div class="item-card"><div class="price-tag">2800</div><div class="img-box"><img src="jp-chenet.webp"></div><div class="info"><span class="name">JP Chenet (750ml)</span></div></div>
+            <div class="item-card"><div class="price-tag">2800</div><div class="img-box"><img src="jancos.webp"></div><div class="info"><span class="name">Jancos Cheek</span></div></div>
+            <div class="item-card"><div class="price-tag">2250</div><div class="img-box"><img src="robertson.webp"></div><div class="info"><span class="name">Robertson Wine</span></div></div>
+            <div class="item-card"><div class="price-tag">1920</div><div class="img-box"><img src="palacio.webp"></div><div class="info"><span class="name">Palacio Wine</span></div></div>
+        </div>
+    </div>
+
+    <div class="menu-group" id="veg-snacks">
+        <h2 class="category-title">Veg Snacks</h2>
+        <div class="grid">
+            <div class="item-card"><div class="price-tag">300</div><div class="img-box"><img src="paneer-chilli.webp"></div><div class="info"><span class="name">Paneer Chilli</span></div></div>
+            <div class="item-card"><div class="price-tag">300</div><div class="img-box"><img src="paneer-pakoda.webp"></div><div class="info"><span class="name">Paneer Pakoda</span></div></div>
+            <div class="item-card"><div class="price-tag">450</div><div class="img-box"><img src="mustang-spicy-aloo.webp"></div><div class="info"><span class="name">Mustang Spicy Aloo</span></div></div>
+            <div class="item-card"><div class="price-tag">400</div><div class="img-box"><img src="mustang-aloo.webp"></div><div class="info"><span class="name">Mustang Aloo</span></div></div>
+            <div class="item-card"><div class="price-tag">250</div><div class="img-box"><img src="french-fry.webp"></div><div class="info"><span class="name">French Fry</span></div></div>
+            <div class="item-card"><div class="price-tag">210</div><div class="img-box"><img src="gundruk.webp"></div><div class="info"><span class="name">Gundruk Bhatmas Sandeko</span></div></div>
+        </div>
+    </div>
+
+    <div class="menu-group" id="mutton">
+        <h2 class="category-title">Mutton Specialties</h2>
+        <div class="grid">
+            <div class="item-card"><div class="price-tag">1190</div><div class="img-box"><img src="mutton-sukuti-gravy.webp"></div><div class="info"><span class="name">Mutton Sukuti Gravy</span></div></div>
+            <div class="item-card"><div class="price-tag">800</div><div class="img-box"><img src="mutton-sukuti-fry.webp"></div><div class="info"><span class="name">Mutton Sukuti Fry / Sandeko</span></div></div>
+            <div class="item-card"><div class="price-tag">800</div><div class="img-box"><img src="mutton-khaja-set.webp"></div><div class="info"><span class="name">Mutton Sukuti Khaja Set</span></div></div>
+            <div class="item-card"><div class="price-tag">700</div><div class="img-box"><img src="mutton-fry.webp"></div><div class="info"><span class="name">Mutton Fry / Gravy</span></div></div>
+            <div class="item-card"><div class="price-tag">750</div><div class="img-box"><img src="hya-kula.webp"></div><div class="info"><span class="name">Hya Kula Fry</span></div></div>
+            <div class="item-card"><div class="price-tag">360</div><div class="img-box"><img src="bhutan.webp"></div><div class="info"><span class="name">Mutton Bhutan</span></div></div>
+        </div>
+    </div>
+
+    <div class="menu-group" id="chicken">
+        <h2 class="category-title">Chicken Delights</h2>
+        <div class="grid">
+            <div class="item-card"><div class="price-tag">500</div><div class="img-box"><img src="chicken-khaja.webp"></div><div class="info"><span class="name">Chicken Khaja Set</span></div></div>
+            <div class="item-card"><div class="price-tag">425</div><div class="img-box"><img src="chicken-sandeko.webp"></div><div class="info"><span class="name">Chicken Sandeko</span></div></div>
+            <div class="item-card"><div class="price-tag">400</div><div class="img-box"><img src="chicken-chilli.webp"></div><div class="info"><span class="name">Chicken Chilli</span></div></div>
+            <div class="item-card"><div class="price-tag">350</div><div class="img-box"><img src="chicken-fry.webp"></div><div class="info"><span class="name">Chicken Fry</span></div></div>
+            <div class="item-card"><div class="price-tag">900</div><div class="img-box"><img src="local-khaja.webp"></div><div class="info"><span class="name">Local Chicken Khaja Set</span></div></div>
+            <div class="item-card"><div class="price-tag">850</div><div class="img-box"><img src="local-sandeko.webp"></div><div class="info"><span class="name">Local Chicken Sandeko</span></div></div>
+            <div class="item-card"><div class="price-tag">700</div><div class="img-box"><img src="local-gravy.webp"></div><div class="info"><span class="name">Local Chicken Gravy</span></div></div>
+        </div>
+    </div>
+
+    <div class="menu-group" id="momo-chau">
+        <h2 class="category-title">Chef's Special (Momo & Noodles)</h2>
+        <div class="grid">
+            <div class="item-card"><div class="price-tag">300</div><div class="img-box"><img src="chicken-momo.webp"></div><div class="info"><span class="name">Chicken Momo</span></div></div>
+            <div class="item-card"><div class="price-tag">280</div><div class="img-box"><img src="chicken-chau.webp"></div><div class="info"><span class="name">Chicken Chowmein</span></div></div>
+            <div class="item-card"><div class="price-tag">180</div><div class="img-box"><img src="veg-chau.webp"></div><div class="info"><span class="name">Veg Chowmein</span></div></div>
+        </div>
+    </div>
+
+    <div class="menu-group" id="kids">
+        <h2 class="category-title">Kids Section (Baby Sets)</h2>
+        <div class="grid">
+            <div class="item-card"><div class="price-tag">250</div><div class="img-box"><img src="baby-veg.webp"></div><div class="info"><span class="name">Baby Set (Veg)</span></div></div>
+            <div class="item-card"><div class="price-tag">500</div><div class="img-box"><img src="baby-nonveg.webp"></div><div class="info"><span class="name">Baby Set (Non-Veg)</span></div></div>
+        </div>
+    </div>
+</div>
+
+<footer>© 2026 Mantra Thakali Nepalgunj | Authenticity Refined</footer>
+
+<a href="#" class="back-to-menu" id="backToTop"><i class="fas fa-arrow-up"></i></a>
+
+<script>
+    window.addEventListener('scroll', () => {
+        const nav = document.getElementById('navbar');
+        const btnTop = document.getElementById("backToTop");
+        if (window.scrollY > 50) nav.classList.add('scrolled');
+        else nav.classList.remove('scrolled');
+        if (window.pageYOffset > 400) btnTop.classList.add("show");
+        else btnTop.classList.remove("show");
+    });
+
+    function filterMenu(cat, btn) {
+        document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+        btn.classList.add('active');
+        btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+
+        const groups = document.querySelectorAll('.menu-group');
+        if(cat === 'all') {
+            groups.forEach(g => { 
+                g.style.display = 'block'; 
+                gsap.fromTo(g, {opacity:0, y:20}, {opacity:1, y:0, duration:0.5}); 
+            });
+        } else {
+            groups.forEach(g => {
+                if(g.id === cat) { 
+                    g.style.display = 'block'; 
+                    gsap.fromTo(g, {opacity:0, scale:0.95}, {opacity:1, scale:1, duration:0.5}); 
+                }
+                else { g.style.display = 'none'; }
+            });
+            const navWrapper = document.querySelector('.nav-wrapper');
+            const offset = navWrapper.getBoundingClientRect().top + window.pageYOffset - 90;
+            window.scrollTo({ top: offset, behavior: 'smooth' });
+        }
+    }
+</script>
+
+</body>
+</html>

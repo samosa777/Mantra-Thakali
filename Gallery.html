@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Gallery | Mantra Thakali Nepalgunj - Moments & Memories</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Prata&family=Inter:wght@300;400;600;700;800&family=Poppins:wght@200;300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+    <style>
+        :root { 
+            --gold: #c5a059; 
+            --cream: #fdfcf9; 
+            --dark: #121212;
+            --white: #ffffff;
+            --soft-border: rgba(197, 160, 89, 0.2);
+            --trans: all 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        * { margin:0; padding:0; box-sizing:border-box; scroll-behavior: smooth; }
+        body { background-color: var(--cream); color: var(--dark); font-family: 'Inter', sans-serif; overflow-x: hidden; }
+
+        /* Navigation */
+        nav { position: fixed; top: 0; width: 100%; padding: 25px 60px; display: flex; justify-content: space-between; align-items: center; z-index: 2000; transition: var(--trans); }
+        nav.scrolled { background: rgba(15, 15, 15, 0.98); padding: 15px 60px; backdrop-filter: blur(20px); border-bottom: 1px solid var(--soft-border); }
+        .nav-logo img { height: 45px; }
+        .nav-links a { color: var(--white); text-decoration: none; margin-left: 30px; font-size: 10px; letter-spacing: 2px; font-weight: 600; text-transform: uppercase; font-family: 'Poppins'; }
+        .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+
+        /* Hero */
+        .gallery-hero { height: 50vh; background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8)), url('gallery-hero.webp') center/cover fixed; display: flex; justify-content: center; align-items: center; text-align: center; color: white; }
+        .gallery-hero h1 { font-family: 'Playfair Display'; font-size: clamp(2.5rem, 8vw, 4rem); letter-spacing: 2px; }
+        .gallery-hero p { color: var(--gold); letter-spacing: 8px; text-transform: uppercase; font-size: 0.7rem; margin-bottom: 10px; }
+
+        /* Category Filter Bar */
+        .filter-wrapper { position: sticky; top: 85px; z-index: 1000; display: flex; justify-content: center; padding: 20px; margin-top: -40px; }
+        .filter-nav { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(15px); padding: 10px 20px; border-radius: 50px; border: 1px solid var(--soft-border); display: flex; gap: 10px; overflow-x: auto; scrollbar-width: none; max-width: 95%; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        .filter-btn { padding: 10px 25px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; border-radius: 40px; cursor: pointer; transition: 0.3s; white-space: nowrap; border: none; background: transparent; color: #555; }
+        .filter-btn.active { background: var(--dark); color: #fff; }
+
+        /* Masonry Gallery Grid */
+        .gallery-container { padding: 60px 5%; max-width: 1400px; margin: 0 auto; columns: 4 300px; column-gap: 20px; }
+        
+        .gallery-item { margin-bottom: 20px; break-inside: avoid; border-radius: 20px; overflow: hidden; position: relative; cursor: pointer; border: 1px solid var(--soft-border); transition: 0.5s; }
+        .gallery-item img { width: 100%; height: auto; display: block; transition: 0.8s; }
+        .gallery-item:hover img { transform: scale(1.1); }
+        
+        /* Overlay on Hover */
+        .item-overlay { position: absolute; bottom: 0; left: 0; width: 100%; padding: 30px 20px; background: linear-gradient(transparent, rgba(0,0,0,0.8)); color: white; opacity: 0; transition: 0.4s; }
+        .gallery-item:hover .item-overlay { opacity: 1; }
+        .item-overlay span { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 2px; color: var(--gold); }
+        .item-overlay h3 { font-family: 'Prata'; font-size: 1.2rem; margin-top: 5px; }
+
+        /* Lightbox (Image Zoom) */
+        .lightbox { position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.95); z-index: 3000; display: none; justify-content: center; align-items: center; cursor: zoom-out; }
+        .lightbox img { max-width: 90%; max-height: 80%; border-radius: 10px; box-shadow: 0 0 50px rgba(0,0,0,0.5); }
+        .close-lightbox { position: absolute; top: 30px; right: 40px; color: white; font-size: 2rem; cursor: pointer; }
+
+        footer { background: var(--dark); color: white; text-align: center; padding: 60px 20px; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; margin-top: 100px; }
+
+        @media (max-width: 992px) { 
+            nav { padding: 20px 30px; }
+            .nav-links { display: none; }
+            .filter-wrapper { top: 70px; }
+            .gallery-container { columns: 2; }
+        }
+        @media (max-width: 600px) { 
+            .gallery-container { columns: 1; }
+        }
+    </style>
+</head>
+<body>
+
+<nav id="navbar">
+    <div class="nav-logo"><a href="index.html"><img src="logo.webp" alt="Mantra"></a></div>
+    <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="menu.html">Menu</a>
+        <a href="about.html">Heritage</a>
+        <a href="gallery.html">Gallery</a>
+    </div>
+</nav>
+
+<section class="gallery-hero">
+    <div class="hero-content">
+        <p>Mantra Memories</p>
+        <h1>Our Gallery</h1>
+    </div>
+</section>
+
+<div class="filter-wrapper">
+    <div class="filter-nav">
+        <button class="filter-btn active" onclick="filterGallery('all', this)">All Moments</button>
+        <button class="filter-btn" onclick="filterGallery('birthday', this)">Birthdays</button>
+        <button class="filter-btn" onclick="filterGallery('teej', this)">Teej Celebration</button>
+        <button class="filter-btn" onclick="filterGallery('anniversary', this)">Anniversary</button>
+        <button class="filter-btn" onclick="filterGallery('meeting', this)">Corporate Meetings</button>
+    </div>
+</div>
+
+<div class="gallery-container" id="galleryGrid">
+    <div class="gallery-item birthday" onclick="openLightbox('Birthday.webp')">
+        <img src="Birthday.webp" alt="Birthday Celebration">
+        <div class="item-overlay"><span>Celebration</span><h3>Birthday Party</h3></div>
+    </div>
+    
+    <div class="gallery-item teej" onclick="openLightbox('teej1.webp')">
+        <img src="teej1.webp" alt="Teej Festival">
+        <div class="item-overlay"><span>Tradition</span><h3>Teej Festival</h3></div>
+    </div>
+
+    <div class="gallery-item anniversary" onclick="openLightbox('guest.webp')">
+        <img src="guest.webp" alt="Anniversary">
+        <div class="item-overlay"><span>Love</span><h3>Anniversary Dinner</h3></div>
+    </div>
+
+    <div class="gallery-item meeting" onclick="openLightbox('guest1.webp')">
+        <img src="guest1.webp" alt="Corporate Meeting">
+        <div class="item-overlay"><span>Professional</span><h3>Business Meeting</h3></div>
+    </div>
+
+    <div class="gallery-item birthday" onclick="openLightbox('new year party.webp')">
+        <img src="new year party.webp" alt="Birthday">
+        <div class="item-overlay"><span>Celebration</span><h3>Happy Moments</h3></div>
+    </div>
+
+    <div class="gallery-item teej" onclick="openLightbox('teej.webp')">
+        <img src="teej.webp" alt="Teej">
+        <div class="item-overlay"><span>Festival</span><h3>Traditional Teej</h3></div>
+    </div>
+    
+    <div class="gallery-item anniversary" onclick="openLightbox('anni2.webp')">
+        <img src="anni2.webp" alt="Anniversary">
+        <div class="item-overlay"><span>Event</span><h3>Special Evening</h3></div>
+    </div>
+
+    </div>
+
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+    <span class="close-lightbox">&times;</span>
+    <img src="" id="lightboxImg">
+</div>
+
+<footer>© 2026 Mantra Thakali Nepalgunj | Creating Memories</footer>
+
+<script>
+    // Navbar effect
+    window.addEventListener('scroll', () => {
+        const nav = document.getElementById('navbar');
+        if (window.scrollY > 50) nav.classList.add('scrolled');
+        else nav.classList.remove('scrolled');
+    });
+
+    // Gallery Filter Logic
+    function filterGallery(category, btn) {
+        // Active button change
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const items = document.querySelectorAll('.gallery-item');
+        
+        items.forEach(item => {
+            gsap.to(item, { scale: 0.8, opacity: 0, duration: 0.3, onComplete: () => {
+                if (category === 'all' || item.classList.contains(category)) {
+                    item.style.display = 'block';
+                    gsap.to(item, { scale: 1, opacity: 1, duration: 0.5 });
+                } else {
+                    item.style.display = 'none';
+                }
+            }});
+        });
+    }
+
+    // Lightbox Logic
+    function openLightbox(src) {
+        const lb = document.getElementById('lightbox');
+        const lbImg = document.getElementById('lightboxImg');
+        lbImg.src = src;
+        lb.style.display = 'flex';
+        gsap.fromTo(lb, {opacity: 0}, {opacity: 1, duration: 0.5});
+    }
+
+    function closeLightbox() {
+        const lb = document.getElementById('lightbox');
+        gsap.to(lb, {opacity: 0, duration: 0.3, onComplete: () => {
+            lb.style.display = 'none';
+        }});
+    }
+</script>
+
+</body>
+</html>
