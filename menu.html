@@ -105,34 +105,34 @@
         footer { background: var(--dark); color: white; text-align: center; padding: 60px 20px; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; }
 
         @media (max-width: 1200px) { .grid { grid-template-columns: repeat(3, 1fr); } }
-        
         @media (max-width: 992px) { 
-            .grid { grid-template-columns: repeat(3, 1fr); } /* Tablets will also show 3 */
+            .grid { grid-template-columns: repeat(2, 1fr); } 
             .nav-links { display: none; } 
             .mobile-toggle { display: block; }
             nav { padding: 20px 30px; }
             nav.scrolled { padding: 15px 30px; }
         }
         
-        /* FIXED MOBILE VIEW - EVERYTHING KEPT, GRID MODIFIED TO SHOW 3 ITEMS */
+        /* FIXED MOBILE VIEW - NOTHING REMOVED, JUST OPTIMIZED FOR PHONES */
         @media (max-width: 600px) { 
-            .grid { grid-template-columns: repeat(3, 1fr); gap: 10px; } /* Now uses 3 columns instead of 2 */
-            .img-box { height: 90px; } /* Image height reduced so 3 columns look clean on mobile */
-            .info { padding: 10px 5px; } /* Spacing optimized for 3 items */
-            .name { font-size: 0.70rem; line-height: 1.2; } /* Text scaled down slightly to fit 3 in a row */
-            .price-tag { top: 5px; right: 5px; padding: 3px 6px; font-size: 0.65rem; border-radius: 8px;} /* Price tag scaled down */
-            .category-title { font-size: 1.6rem; margin-bottom: 25px; } 
-            .menu-hero h1 { font-size: 2.2rem; } 
-            .container { padding: 50px 3%; } /* Margins reduced to give more space to items */
+            .grid { grid-template-columns: repeat(2, 1fr); gap: 15px; } /* Now uses 2 columns instead of 1 so photos don't stretch */
+            .img-box { height: 130px; } /* Image height reduced for mobile screens */
+            .info { padding: 12px 8px; } /* Spacing optimized */
+            .name { font-size: 0.85rem; } /* Text scaled down slightly */
+            .price-tag { top: 10px; right: 10px; padding: 4px 10px; font-size: 0.75rem; } /* Price tag scaled down */
+            .category-title { font-size: 1.6rem; margin-bottom: 25px; } /* Category title optimized */
+            .menu-hero h1 { font-size: 2.2rem; } /* Main title scaled down */
+            .container { padding: 50px 5%; }
             .floating-call-btn { bottom: 90px; right: 20px; width: 50px; height: 50px; font-size: 20px;} 
             .back-to-menu { right: 20px; bottom: 20px; } 
         }
         
-        /* Extra small phones fallback */
+        /* Extra small phones fallback - CHANGED TO 2 COLUMNS HERE TOO */
         @media (max-width: 380px) {
-            .grid { grid-template-columns: repeat(3, 1fr); gap: 6px; padding: 0 5px; } /* 3 columns here too */
-            .img-box { height: 70px; }
-            .name { font-size: 0.65rem; }
+            .grid { grid-template-columns: repeat(2, 1fr); padding: 0 10px; gap: 10px; }
+            .img-box { height: 110px; }
+            .name { font-size: 0.75rem; }
+            .price-tag { padding: 3px 8px; font-size: 0.7rem; }
         }
     </style>
 </head>
