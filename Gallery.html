@@ -67,7 +67,7 @@
 
         /* Category Filter Bar */
         .filter-wrapper { position: sticky; top: 85px; z-index: 1000; display: flex; justify-content: center; padding: 20px; margin-top: -40px; }
-        .filter-nav { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(15px); padding: 10px 20px; border-radius: 50px; border: 1px solid var(--soft-border); display: flex; gap: 10px; overflow-x: auto; scrollbar-width: none; max-width: 95%; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        .filter-nav { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(15px); padding: 10px 20px; border-radius: 40px; border: 1px solid var(--soft-border); display: flex; gap: 10px; overflow-x: auto; scrollbar-width: none; max-width: 95%; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
         .filter-btn { padding: 10px 25px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; border-radius: 40px; cursor: pointer; transition: 0.3s; white-space: nowrap; border: none; background: transparent; color: #555; }
         .filter-btn.active { background: var(--dark); color: #fff; }
 
@@ -91,15 +91,29 @@
 
         footer { background: var(--dark); color: white; text-align: center; padding: 60px 20px; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; margin-top: 100px; }
 
+        /* --- RESPONSIVE ADJUSTMENTS --- */
         @media (max-width: 992px) { 
             nav { padding: 20px 30px; }
             .nav-links { display: none; }
             .mobile-toggle { display: block; }
             .filter-wrapper { top: 70px; }
-            .gallery-container { columns: 2; }
+            .gallery-container { columns: 2; column-gap: 15px; padding: 40px 15px; } /* Tablet par 2 columns */
         }
+
         @media (max-width: 600px) { 
-            .gallery-container { columns: 1; }
+            .gallery-container { 
+                columns: 2; /* Mobile par 2 columns (Stylist Masonry Look) */
+                column-gap: 10px; 
+                padding: 30px 10px; 
+            }
+            .gallery-item { margin-bottom: 10px; border-radius: 12px; } /* Chote screens par choti padding aur rounded corners */
+            .gallery-hero { height: 40vh; }
+            .item-overlay { padding: 15px 10px; }
+            .item-overlay h3 { font-size: 0.9rem; }
+            .item-overlay span { font-size: 0.5rem; }
+            
+            /* Mobile par overlay hamesha thoda dikhe ya touch par trigger ho */
+            .item-overlay { opacity: 1; background: linear-gradient(transparent, rgba(0,0,0,0.6)); }
         }
     </style>
 </head>
@@ -116,8 +130,7 @@
     <a href="index.html#contact" class="menu-link"><div class="menu-dot"></div>Contact</a>
     <div class="mobile-nav-footer">
         <div class="mobile-social">
-
-        </div>
+            </div>
     </div>
 </div>
 
