@@ -127,11 +127,12 @@
             .back-to-menu { right: 20px; bottom: 20px; } 
         }
         
-        /* Extra small phones fallback */
+        /* Extra small phones fallback - CHANGED TO 2 COLUMNS HERE TOO */
         @media (max-width: 380px) {
-            .grid { grid-template-columns: 1fr; padding: 0 10px; }
-            .img-box { height: 180px; }
-            .name { font-size: 1rem; }
+            .grid { grid-template-columns: repeat(2, 1fr); padding: 0 10px; gap: 10px; }
+            .img-box { height: 110px; }
+            .name { font-size: 0.75rem; }
+            .price-tag { padding: 3px 8px; font-size: 0.7rem; }
         }
     </style>
 </head>
